@@ -1,10 +1,14 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const Login = () => {
-    const { signInWithGoogle, user, logOutUser } = useAuth()
+    const { signInWithGoogle, user, logOutUser, } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const redirect_uri = location.state?.from || '/home'
     const handleGoogleSignIn = () => {
-        signInWithGoogle()
+        signInWithGoogle().then(result => navigate(redirect_uri))
     }
     const handleSignOut = () => {
         console.log('SignOUt');
